@@ -1,0 +1,3 @@
+package fujitsu.takehome.transferapp.annotations
+
+annotation class NoArgsConstructor

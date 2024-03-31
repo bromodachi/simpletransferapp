@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD MAPPER 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="fujitsu.takehome.transferapp.repository.mapper.AccountsMapper">
+
+    <resultMap id="accountEntity" type="fujitsu.takehome.transferapp.entity.Account">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="balance" property="balance"/>
+        <result column="currency" property="currency" javaType="String"/>
+    </resultMap>
+
+
+    <select id="getAccountByAccountId" resultMap="accountEntity">
+        SELECT id, user_id, balance, currency  FROM accounts WHERE id = #{account_id};
+    </select>
+    <update id="updateAccountBalance">
+        UPDATE
+            accounts
+        SET
+            balance = balance + #{account_transfer.amount}
+        WHERE
+            id =  #{account_transfer.accountId}
+    </update>
+
+    <insert id="insertAccount" useGeneratedKeys="true" keyProperty="account.id">
+        INSERT INTO accounts (user_id, balance, currency)
+        VALUES (#{account.userId}, #{account.balance}, #{account.currency})
+    </insert>
+
+</mapper>
